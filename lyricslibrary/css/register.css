@@ -1,0 +1,12 @@
+body {
+    background: url(music-background.png) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+	background-color: #f4f4f4;
+	color: #5a5656;
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+    }

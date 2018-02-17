@@ -1,0 +1,166 @@
+<html>
+<head>
+<link rel="stylesheet" href="css\index.css?version=51" >
+<script type="text/javascript" src="js\transliterate.js"></script>
+</head>
+<body>
+<header>
+		<ul>
+			<li><a class="active" href="home.php">Home</a></li>
+			<li><a href="#">Browse</a></li>
+			<li><a href="#">Discover</a></li>
+			<li><a href="#">Submit Lyrics</a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#"></a></li>
+			<li><a href="#">About</a></li>
+		</ul>
+		</header>
+<center>
+<form name="contactform" method="post" action="upload.php">
+<table width="450px">
+<tr>
+ <td valign="top">
+  <label for="first_name">First Name *</label>
+ </td>
+ <td valign="top">
+  <input  type="text" name="first_name" maxlength="50" size="30">
+ </td>
+</tr>
+<tr>
+ <td valign="top">
+  <label for="email">Email Address *</label>
+ </td>
+ <td valign="top">
+  <input  type="text" name="email" maxlength="80" size="30">
+ </td>
+</tr>
+<tr>
+ <td valign="top"">
+  <label for="last_name" id="title">Lyrics Title</label>
+ </td>
+ <td valign="top">
+  <input  type="text" name="last_name" maxlength="50" size="30">
+ </td>
+</tr>
+<tr>
+ <td valign="top">
+  <label for="telephone">Singer Name</label>
+ </td>
+ <td valign="top">
+  <input  type="text" name="telephone" maxlength="30" size="30">
+ </td>
+</tr>
+<tr id="lyrics">
+ <td valign="top" id="lyrics">
+  <label id="lyrics">Full Lyrics *</label>
+ </td>
+ <td valign="top">
+  <textarea  name="comments" maxlength="1000" cols="25" rows="6"></textarea>
+ </td>
+</tr>
+<tr>
+ <td colspan="2" style="text-align:center">
+  <input type="submit" value="Submit">
+ </td>
+</tr>
+</table>
+</form>
+</center>
+<script type="text/javascript">
+		// Load the Google Transliteration API
+		google.load("elements", "1", {
+			packages: "transliteration"
+		});
+		var transliterationControl;
+		function onLoad() {
+			var options = {
+				sourceLanguage: 'en',
+				destinationLanguage: ['hi'],
+				transliterationEnabled: true,
+				shortcutKey: 'ctrl+g'
+			};
+			// Create an instance on TransliterationControl with the required
+			// options.
+			transliterationControl = new
+	google.elements.transliteration.TransliterationControl(options);
+
+			// Enable transliteration in the textfields with the given ids.
+			var ids = [ "title", "lyrics" ]; //YOU NEED TO PUT YOUR ID HERE
+			transliterationControl.makeTransliteratable(ids);
+
+			// Add the STATE_CHANGED event handler to correcly maintain the state
+			// of the checkbox.
+			transliterationControl.addEventListener(
+
+	google.elements.transliteration.TransliterationControl.EventType.STATE_CHANGED,
+				transliterateStateChangeHandler);
+
+			// Add the SERVER_UNREACHABLE event handler to display an error message
+			// if unable to reach the server.
+			transliterationControl.addEventListener(
+
+	google.elements.transliteration.TransliterationControl.EventType.SERVER_UNREACHABLE,
+				serverUnreachableHandler);
+
+			// Add the SERVER_REACHABLE event handler to remove the error message
+			// once the server becomes reachable.
+			transliterationControl.addEventListener(
+
+	google.elements.transliteration.TransliterationControl.EventType.SERVER_REACHABLE,
+				serverReachableHandler);
+
+			// Set the checkbox to the correct state.
+			document.getElementById('hitrans').checked =
+	transliterationControl.isTransliterationEnabled();
+		}
+
+		// Handler for STATE_CHANGED event which makes sure checkbox status
+		// reflects the transliteration enabled or disabled status.
+		function transliterateStateChangeHandler(e) {
+			document.getElementById('hitrans').checked =
+	e.transliterationEnabled;
+		}
+
+		// Handler for checkbox's click event.  Calls toggleTransliteration to toggle
+		// the transliteration state.
+		function checkboxClickHandler() {
+			transliterationControl.toggleTransliteration();
+		}
+
+		// SERVER_UNREACHABLE event handler which displays the error message.
+		function serverUnreachableHandler(e) {
+			document.getElementById("errorDiv").innerHTML =
+				"Transliteration server unreachable!";
+		}
+
+		// SERVER_UNREACHABLE event handler which clears the error message.
+		function serverReachableHandler(e) {
+			document.getElementById("errorDiv").innerHTML = "";
+		}
+		google.setOnLoadCallback(onLoad);
+	</script>
+</body>
+</html>
